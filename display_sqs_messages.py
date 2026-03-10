@@ -50,7 +50,11 @@ while True:
         except Exception:
             parsed_body = json.loads(body)
 
-        sequence_number = parsed_body.get("sequence_number")
+        if parsed_body.get("sequence_number"):
+            sequence_number = parsed_body.get("sequence_number")
+        elif parsed_body.get("Message"):
+            Message = ast.literal_eval(parsed_body["Message"])
+            sequence_number = Message["sequence_number"]
 
         print(f"Received message with sequence_number: {sequence_number}")
 
